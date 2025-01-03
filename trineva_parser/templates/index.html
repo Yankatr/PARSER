@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Решала</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: black;
+            background-size: cover;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            color: white;
+        }
+
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 20px;
+            width: 100%;
+            max-width: 600px;
+        }
+
+        input[type="text"] {
+            padding: 12px;
+            margin: 10px;
+            border: 2px solid #7e1dff;
+            border-radius: 4px;
+            width: 100%;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: white;
+            font-size: 1rem;
+        }
+
+        input[type="text"]::placeholder {
+            color: #b6b6b6;
+        }
+
+        button {
+            padding: 12px 25px;
+            margin: 5px;
+            border: none;
+            background-color: #7e1dff;
+            color: white;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: 0.3s;
+            font-size: 1rem;
+        }
+
+        button:hover {
+            background-color: #9a2bff;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+            width: 100%;
+            max-width: 600px;
+        }
+
+        li {
+            margin: 15px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 1.2rem;
+        }
+
+        li form {
+            display: inline;
+        }
+
+        .result {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 25px;
+            width: 100%;
+            max-width: 600px;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .result p {
+            margin: 5px 0;
+            font-size: 1.1rem;
+        }
+
+    </style>
+</head>
+<body>
+    <form method="POST" action="/">
+        <input type="text" name="expression" placeholder="Введите арифметическое выражение" required>
+        <button type="submit" name="action" value="add">Добавить</button>
+    </form>
+
+    <h2>Список выражений:</h2>
+    <ul>
+        {% for expr in expressions %}
+            <li>
+                <span>{{ expr }}</span>
+                <form method="POST" action="/" style="display: inline;">
+                    <input type="hidden" name="index" value="{{ loop.index0 }}">
+                    <button type="submit" name="action" value="delete">Удалить</button>
+                    <button type="submit" name="action" value="solve">Решить</button>
+                </form>
+            </li>
+        {% endfor %}
+    </ul>
+
+    {% if solved_expression %}
+        <div class="result">
+            <p><strong>Выражение:</strong> {{ solved_expression }}</p>
+            <p><strong>Результат:</strong> {{ result }}</p>
+        </div>
+    {% endif %}
+</body>
+</html>
